@@ -165,5 +165,41 @@ ORDER BY
 LIMIT 1)
 
 -- 5a) What rating ('PG', 'G', etc) has the least films?
+
+SELECT 
+	rating
+
+FROM 
+	film
+
+GROUP BY
+	rating
+
+ORDER BY
+	COUNT(film_id)
+
+LIMIT 1
+
 -- 5b) Return all films that have the rating that is biggest category 
 -- (ie. rating with the highest count of films)
+
+SELECT
+	title
+
+FROM 
+	film
+
+WHERE
+	rating = (SELECT 
+	rating
+
+FROM 
+	film
+
+GROUP BY
+	rating
+
+ORDER BY
+	COUNT(film_id) DESC
+
+LIMIT 1)
