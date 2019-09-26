@@ -102,11 +102,67 @@ FROM
 
 
 -- 3a) What is the average payment amount in the database?
+
+SELECT
+	ROUND(AVG(amount),2)
+
+FROM 
+	payment
+
 -- 3b) Return all payments with below average payment amounts
 
+SELECT
+	payment_id
+	,amount
 
--- 4a) What is the customer ID who made the earliest payment?		  
--- 4b) Return all purchases from the longest standing customer				
+FROM
+	payment
+
+WHERE 
+	amount < (SELECT
+	ROUND(AVG(amount),2)
+
+FROM 
+	payment)
+
+-- 4a) What is the customer ID who made the earliest payment?	
+
+SELECT
+	customer_id
+
+FROM
+	payment
+
+GROUP BY
+	customer_id
+
+ORDER BY
+	MIN(payment_date)
+
+LIMIT 1
+
+-- 4b) Return all purchases from the longest standing customer	
+
+SELECT
+	payment_id
+
+FROM
+	payment
+
+WHERE
+	customer_id = (SELECT
+	customer_id
+
+FROM
+	payment
+
+GROUP BY
+	customer_id
+
+ORDER BY
+	MIN(payment_date)
+
+LIMIT 1)
 
 -- 5a) What rating ('PG', 'G', etc) has the least films?
 -- 5b) Return all films that have the rating that is biggest category 
