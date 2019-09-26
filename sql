@@ -52,11 +52,53 @@ WHERE staff_id = (SELECT staff_id
                   
 -- EXERCISES - each one has an 'a' and a 'b' part. The 'a' part is the subquery for the 'b' part.
 -- 1a) What is the average length of all the films?
+
+SELECT
+	ROUND(AVG(length), 2)
+
+FROM
+	film
+
 -- 1b) Return all films with shorter than average length.
+
+SELECT
+	title
+	,length
+
+FROM
+	film
+
+WHERE
+	length < (SELECT
+	ROUND(AVG(length), 2)
+
+FROM
+	film)
 
 
 -- 2a) What is the smallest rental rate	in the database?
+
+SELECT
+	MIN(rental_rate)
+
+FROM
+	film
+
 -- 2b) Return all films with the lowest rental rate (using a WHERE claus)
+
+SELECT
+	title
+	,rental_rate
+
+FROM 
+	film
+
+WHERE 
+	rental_rate  = (SELECT
+	MIN(rental_rate)
+
+FROM
+	film)
 
 
 -- 3a) What is the average payment amount in the database?
